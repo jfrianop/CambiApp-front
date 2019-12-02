@@ -82,7 +82,6 @@ SettingStack.path = '';
 
 const tabNavigator = createBottomTabNavigator({
   HomeStack,
-  SwapsStack,
   NewItemStack,
   SettingStack,
 });

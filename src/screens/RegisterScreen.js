@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux'
-import { signIn } from '../actions/authActions';
+import { register } from '../actions/authActions';
 
 import {
   Button,
@@ -10,19 +10,18 @@ import {
   View,
 } from 'react-native';
 
-function SignInScreen(props) {
+function RegisterScreen(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loginSuccessful, setLogedIn] = useState(false);
 
   _signInAsync = async () => {
-    await props.signIn(email, password, () => { props.navigation.navigate('App') });
+    await props.register(email, password, () => { props.navigation.navigate('App') });
   };
 
 
   return (
     <View style={styles.container}>
-      {props.badLogin && <Text>Nombre de usuario o contraseña incorrectos</Text>}
+      {props.badRegister && <Text>Error registrando el usuario</Text>}
       <TextInput
         selectionColor={"#428AF8"}
         placeholder={"Usuario"}
@@ -38,14 +37,13 @@ function SignInScreen(props) {
         onChangeText={text => setPassword(text)}
         value={password}
       />
-      <Button title="Ingresar" onPress={this._signInAsync} />
-      <Button title="Crear una cuenta" onPress={() => { props.navigation.navigate('Register') }} />
+      <Button title="Registrarse" onPress={this._signInAsync} />
     </View>
   );
 }
 
-SignInScreen.navigationOptions = {
-  title: 'Iniciar Sesión'
+RegisterScreen.navigationOptions = {
+  title: 'Registrarse'
 }
 
 const styles = StyleSheet.create({
@@ -59,8 +57,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-  token: state.auth.token,
-  badLogin: state.auth.badLogin
+  badRegister: state.auth.badRegister
 });
 
-export default connect(mapStateToProps, { signIn })(SignInScreen);
+export default connect(mapStateToProps, { register })(RegisterScreen);
